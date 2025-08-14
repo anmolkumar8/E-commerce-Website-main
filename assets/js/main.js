@@ -445,3 +445,216 @@ function deferNonCriticalJS() {
 
 // Call deferred JS after page load
 window.addEventListener('load', deferNonCriticalJS);
+
+// Coming soon functionality
+function showComingSoon(feature) {
+    cart.showNotification(`${feature} feature coming soon! Stay tuned for updates.`, 'info');
+}
+
+// Show all products functionality
+function showAllProducts() {
+    const container = document.getElementById('featuredProducts');
+    if (!container) return;
+    
+    // Load all products instead of just featured ones
+    const allProducts = getAllProducts().slice(0, 20); // Show first 20 products
+    
+    container.innerHTML = allProducts.map(product => `
+        <div class="product-card animate-fade-up">
+            <div class="product-image">
+                <img src="${product.image}" alt="${product.name}" loading="lazy">
+                ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+            </div>
+            <div class="product-info">
+                <h3 class="product-title">${product.name}</h3>
+                <div class="product-price">₹${product.price.toLocaleString()}</div>
+                <div class="product-rating">
+                    ${generateStars(product.rating)}
+                    <span>(${product.rating})</span>
+                </div>
+                <div class="product-actions">
+                    <button class="btn-cart" onclick="addToCart(${product.id})">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                    <button class="btn-wishlist" onclick="addToWishlist(${product.id})">
+                        <i class="far fa-heart"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `).join('');
+    
+    // Update button text
+    const button = document.querySelector('[onclick="showAllProducts()"]');
+    if (button) {
+        button.textContent = 'Show Less';
+        button.setAttribute('onclick', 'loadFeaturedProducts(); this.textContent="View All Products"; this.setAttribute("onclick", "showAllProducts()");');
+    }
+    
+    cart.showNotification('Showing all products!', 'success');
+}
+
+// Video modal functionality
+function showVideoModal() {
+    // Create and show video modal
+    const modal = document.createElement('div');
+    modal.className = 'video-modal';
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 3000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    `;
+    
+    modal.innerHTML = `
+        <div class="video-container" style="
+            position: relative;
+            max-width: 800px;
+            width: 90%;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+        ">
+            <button onclick="closeVideoModal()" style="
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                background: none;
+                border: none;
+                font-size: 1.5rem;
+                color: #7f8c8d;
+                cursor: pointer;
+            ">
+                <i class="fas fa-times"></i>
+            </button>
+            <h2 style="margin-bottom: 1rem; color: var(--primary-color);">Our Story</h2>
+            <div style="
+                width: 100%;
+                height: 300px;
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 2rem 0;
+                color: white;
+                font-size: 1.2rem;
+            ">
+                <div>
+                    <i class="fas fa-play-circle" style="font-size: 4rem; margin-bottom: 1rem; display: block;"></i>
+                    <p>Video Coming Soon!</p>
+                    <p style="font-size: 0.9rem; opacity: 0.8;">Experience our brand story through an immersive video journey.</p>
+                </div>
+            </div>
+            <p style="color: var(--text-light); line-height: 1.6;">
+                At ANUFA, we believe fashion is more than clothing—it's about expressing your unique identity. 
+                Our premium collection combines quality craftsmanship with contemporary design to help you 
+                elevate your style journey.
+            </p>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden';
+    
+    // Fade in
+    setTimeout(() => {
+        modal.style.opacity = '1';
+    }, 10);
+    
+    // Close on overlay click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeVideoModal();
+        }
+    });
+}
+
+// Close video modal
+function closeVideoModal() {
+    const modal = document.querySelector('.video-modal');
+    if (modal) {
+        modal.style.opacity = '0';
+        document.body.style.overflow = '';
+        setTimeout(() => {
+            modal.remove();
+        }, 300);
+    }
+}
+
+// Update filter by category to show filtered products
+function filterByCategory(category) {
+    const container = document.getElementById('featuredProducts');
+    if (!container) return;
+    
+    const filteredProducts = getAllProducts().filter(product => 
+        product.category.toLowerCase().includes(category.toLowerCase())
+    ).slice(0, 12);
+    
+    if (filteredProducts.length > 0) {
+        container.innerHTML = filteredProducts.map(product => `
+            <div class="product-card animate-fade-up">
+                <div class="product-image">
+                    <img src="${product.image}" alt="${product.name}" loading="lazy">
+                    ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">${product.name}</h3>
+                    <div class="product-price">₹${product.price.toLocaleString()}</div>
+                    <div class="product-rating">
+                        ${generateStars(product.rating)}
+                        <span>(${product.rating})</span>
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn-cart" onclick="addToCart(${product.id})">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                        <button class="btn-wishlist" onclick="addToWishlist(${product.id})">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+        
+        // Scroll to products section
+        document.getElementById('featured').scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+        });
+        
+        // Update section title
+        const sectionTitle = document.querySelector('#featured .section-title');
+        if (sectionTitle) {
+            const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
+            sectionTitle.textContent = `${categoryName}'s Collection`;
+            
+            // Add reset button
+            if (!document.querySelector('.reset-filter')) {
+                const resetBtn = document.createElement('button');
+                resetBtn.className = 'btn btn-secondary reset-filter';
+                resetBtn.textContent = 'Show All Products';
+                resetBtn.style.marginTop = '1rem';
+                resetBtn.onclick = () => {
+                    loadFeaturedProducts();
+                    sectionTitle.textContent = 'Featured Products';
+                    resetBtn.remove();
+                };
+                sectionTitle.after(resetBtn);
+            }
+        }
+        
+        cart.showNotification(`Showing ${categoryName}'s products!`, 'success');
+    } else {
+        cart.showNotification(`No products found in ${category} category.`, 'error');
+    }
+}
