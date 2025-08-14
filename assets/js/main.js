@@ -591,70 +591,8 @@ function closeVideoModal() {
     }
 }
 
-// Update filter by category to show filtered products
+// Update filter by category to redirect to shop page with category filter
 function filterByCategory(category) {
-    const container = document.getElementById('featuredProducts');
-    if (!container) return;
-    
-    const filteredProducts = getAllProducts().filter(product => 
-        product.category.toLowerCase().includes(category.toLowerCase())
-    ).slice(0, 12);
-    
-    if (filteredProducts.length > 0) {
-        container.innerHTML = filteredProducts.map(product => `
-            <div class="product-card animate-fade-up">
-                <div class="product-image">
-                    <img src="${product.image}" alt="${product.name}" loading="lazy">
-                    ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
-                </div>
-                <div class="product-info">
-                    <h3 class="product-title">${product.name}</h3>
-                    <div class="product-price">₹${product.price.toLocaleString()}</div>
-                    <div class="product-rating">
-                        ${generateStars(product.rating)}
-                        <span>(${product.rating})</span>
-                    </div>
-                    <div class="product-actions">
-                        <button class="btn-cart" onclick="addToCart(${product.id})">
-                            <i class="fas fa-shopping-cart"></i> Add to Cart
-                        </button>
-                        <button class="btn-wishlist" onclick="addToWishlist(${product.id})">
-                            <i class="far fa-heart"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `).join('');
-        
-        // Scroll to products section
-        document.getElementById('featured').scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
-        });
-        
-        // Update section title
-        const sectionTitle = document.querySelector('#featured .section-title');
-        if (sectionTitle) {
-            const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
-            sectionTitle.textContent = `${categoryName}'s Collection`;
-            
-            // Add reset button
-            if (!document.querySelector('.reset-filter')) {
-                const resetBtn = document.createElement('button');
-                resetBtn.className = 'btn btn-secondary reset-filter';
-                resetBtn.textContent = 'Show All Products';
-                resetBtn.style.marginTop = '1rem';
-                resetBtn.onclick = () => {
-                    loadFeaturedProducts();
-                    sectionTitle.textContent = 'Featured Products';
-                    resetBtn.remove();
-                };
-                sectionTitle.after(resetBtn);
-            }
-        }
-        
-        cart.showNotification(`Showing ${categoryName}'s products!`, 'success');
-    } else {
-        cart.showNotification(`No products found in ${category} category.`, 'error');
-    }
+    // Redirect to shop page with category filter
+    window.location.href = `shop.html?category=${category}`;
 }
