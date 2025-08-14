@@ -3,153 +3,245 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ANUFA - E-Commerce</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-
-        body {
-            background: linear-gradient(135deg, #1b1c1d, #ff5733);
-            color: #fff;
-            text-align: center;
-            font-family: 'Arial', sans-serif;
-        }
-        
-        .anufa-highlight {
-            font-size: 4rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            color: rgb(243, 243, 237);
-            text-shadow: 0 0 15px #dee8eb, 0 0 25px #b3c11f, 0 0 35px #0f9cc3;
-            animation: glow 1.5s infinite alternate ease-in-out;
-            margin-top: 20px;
-            letter-spacing: 5px;
-        }
-
-        @keyframes glow {
-            0% {
-                text-shadow: 0 0 15px #ffeb3b, 0 0 25px #ffcc00, 0 0 35px #ff9800;
-            }
-            100% {
-                text-shadow: 0 0 25px #ffcc00, 0 0 35px #ff9800, 0 0 45px #ff5733;
-            }
-        }
-
-        /* Navigation Bar */
-        .navbar {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .navbar a {
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: bold;
-            color: #fff;
-            padding: 10px 15px;
-            transition: color 0.3s ease-in-out;
-        }
-
-        .navbar a:hover {
-            color: #8B0000;
-        }
-
-        /* Homepage Image */
-        .homepage-image {
-            margin-top: 30px;
-        }
-
-        .homepage-image img {
-            width: 80%;
-            max-width: 600px;
-            border-radius: 15px;
-            box-shadow: 0px 4px 10px rgba(255, 204, 0, 0.7);
-        }
-
-        /* Auth Buttons */
-        .auth-buttons {
-            margin-top: 20px;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 25px;
-            font-size: 18px;
-            font-weight: bold;
-            text-transform: uppercase;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .signup {
-            background: linear-gradient(45deg, #ff5733, #ffcc00);
-            color: #fff;
-            box-shadow: 0px 4px 15px rgba(255, 87, 51, 0.7);
-        }
-
-        .login {
-            background: linear-gradient(45deg, #8B0000, #ff0000);
-            color: #fff;
-            box-shadow: 0px 4px 15px rgba(139, 0, 0, 0.7);
-        }
-
-        .btn:hover {
-            transform: scale(1.1);
-            opacity: 0.9;
-        }
-
-        /* Slogan - YOU EXPECT, WE DELIVER */
-        .slogan {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-top: 50px;
-            color: #fff;
-            text-shadow: 0 0 15px #ffcc00, 0 0 25px #ff5733, 0 0 35px #8B0000;
-            animation: pulse 1.5s infinite alternate ease-in-out;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1.1);
-                opacity: 0.8;
-            }
-        }
-
-    </style>
+    <title>ANUFA - Premium E-Commerce Store</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-brand">
+                <h1 class="logo">ANUFA</h1>
+                <span class="tagline">Premium Collection</span>
+            </div>
+            
+            <nav class="navbar">
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link active">Home</a></li>
+                    <li><a href="shop.html" class="nav-link">Shop</a></li>
+                    <li><a href="categories.html" class="nav-link">Categories</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div class="nav-actions">
+                <button class="search-btn" onclick="toggleSearch()">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="cart-btn" onclick="openCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </button>
+                <button class="user-btn" onclick="toggleUserMenu()">
+                    <i class="fas fa-user"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Search Bar -->
+        <div class="search-overlay" id="searchOverlay">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search products..." id="searchInput">
+                <button class="search-close" onclick="toggleSearch()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- User Menu -->
+        <div class="user-menu" id="userMenu">
+            <a href="login.html" class="user-menu-item">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </a>
+            <a href="register.html" class="user-menu-item">
+                <i class="fas fa-user-plus"></i> Register
+            </a>
+            <a href="profile.html" class="user-menu-item">
+                <i class="fas fa-user-circle"></i> Profile
+            </a>
+            <a href="orders.html" class="user-menu-item">
+                <i class="fas fa-box"></i> My Orders
+            </a>
+        </div>
+    </header>
 
-    <!-- ANUFA Branding -->
-    <div class="anufa-highlight">ANUFA</div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Discover Premium Fashion</h1>
+            <p class="hero-subtitle">YOU EXPECT, WE DELIVER - Premium quality clothing and accessories for every occasion</p>
+            <div class="hero-buttons">
+                <a href="shop.html" class="btn btn-primary">Shop Now</a>
+                <a href="categories.html" class="btn btn-secondary">Browse Categories</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="images/clothes.jpg" alt="Premium Fashion Collection" class="hero-img">
+        </div>
+    </section>
 
-    <!-- Navigation Links -->
-    <div class="navbar">
-        <a href="index.html">Home</a>
-        <a href="products.html">Products</a>
-        <a href="about.html">About Us</a>
-        <a href="contact.html">Contact</a>
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-shipping-fast"></i>
+                    <h3>Free Shipping</h3>
+                    <p>Free delivery on orders above ₹999</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-undo-alt"></i>
+                    <h3>Easy Returns</h3>
+                    <p>30-day hassle-free returns</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Secure Payment</h3>
+                    <p>100% secure payment gateway</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>24/7 Support</h3>
+                    <p>Round-the-clock customer service</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="categories-section">
+        <div class="container">
+            <h2 class="section-title">Shop by Category</h2>
+            <div class="categories-grid">
+                <div class="category-card" onclick="filterByCategory('men')">
+                    <img src="images/shoppinga.webp" alt="Men's Fashion">
+                    <div class="category-info">
+                        <h3>Men's Fashion</h3>
+                        <span>50+ Products</span>
+                    </div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('women')">
+                    <img src="images/shoppingb.jpg" alt="Women's Fashion">
+                    <div class="category-info">
+                        <h3>Women's Fashion</h3>
+                        <span>60+ Products</span>
+                    </div>
+                </div>
+                <div class="category-card" onclick="filterByCategory('accessories')">
+                    <img src="images/a.webp" alt="Accessories">
+                    <div class="category-info">
+                        <h3>Accessories</h3>
+                        <span>30+ Products</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products">
+        <div class="container">
+            <h2 class="section-title">Featured Products</h2>
+            <div class="products-grid" id="featuredProducts">
+                <!-- Products will be loaded dynamically -->
+            </div>
+            <div class="text-center">
+                <a href="shop.html" class="btn btn-primary">View All Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Stay Updated with Latest Collections</h2>
+                <p>Subscribe to our newsletter and get 10% off on your first order</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email" class="newsletter-input">
+                    <button type="submit" class="btn btn-primary">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ANUFA</h3>
+                    <p>Premium fashion destination for modern individuals. Quality, style, and comfort in every piece.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="shop.html">Shop</a></li>
+                        <li><a href="categories.html">Categories</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="shipping.html">Shipping Info</a></li>
+                        <li><a href="returns.html">Returns</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="support.html">Support</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-phone"></i> +91 9876543210</p>
+                    <p><i class="fas fa-envelope"></i> info@anufa.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Mumbai, India</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 ANUFA. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Shopping Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="cart-close" onclick="closeCart()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be populated here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span class="total-label">Total: </span>
+                <span class="total-amount" id="cartTotal">₹0.00</span>
+            </div>
+            <button class="btn btn-primary btn-full" onclick="checkout()">Checkout</button>
+        </div>
     </div>
 
-    <!-- Homepage Image -->
-    <div class="homepage-image">
-        <img src="images/clothes.jpg" alt="ANUFA Homepage">
-    </div>
+    <div class="overlay" id="overlay"></div>
 
-    <!-- Auth Buttons -->
-    <div class="auth-buttons">
-        <a href="signup.html" class="btn signup">Sign Up</a>
-        <a href="signin.html" class="btn login">Login</a>
-    </div>
-
-    <!-- Slogan -->
-    <div class="slogan">YOU EXPECT, WE DELIVER</div>
-
+    <!-- Scripts -->
+    <script src="assets/js/products.js"></script>
+    <script src="assets/js/cart.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
