@@ -297,11 +297,6 @@ For support or questions:
 - **Email**: info@anufa.com
 - **Phone**: +91 9876543210
 
-## 🔗 Live Demo
-
-[View Live Demo](https://your-demo-url.com) *(Replace with your actual demo URL)*
-
----
 
 **Built with ❤️ for modern e-commerce experiences**
 
